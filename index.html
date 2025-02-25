@@ -41,7 +41,7 @@
         let students = [];
         
         // Fetch the JSON file and store the data
-        fetch("election_register.json")
+        fetch("election_register_25.json")
             .then(response => response.json())
             .then(data => students = data)
             .catch(error => console.error("your data is not loaded:", error));
