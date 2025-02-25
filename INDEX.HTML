@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check Your Election Details</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
+        input, button { padding: 10px; margin: 5px; width: 250px; }
+        button { background-color: blue; color: white; border: none; cursor: pointer; }
+        #result { margin-top: 20px; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <h2>Check Your Election Register Details</h2>
+    <input type="text" id="idNumber" placeholder="Enter ID Number"><br>
+    <input type="text" id="lastName" placeholder="Enter Last Name"><br>
+    <button onclick="checkDetails()">Check Details</button>
+    <p id="result"></p>
+    
+    <script>
+        let students = [];
+        
+        // Fetch the JSON file and store the data
+        fetch("election_register.json")
+            .then(response => response.json())
+            .then(data => students = data)
+            .catch(error => console.error("Error loading data:", error));
+
+        function checkDetails() {
+            let idNumber = document.getElementById("idNumber").value.trim();
+            let lastName = document.getElementById("lastName").value.trim().toUpperCase();
+            let result = document.getElementById("result");
+            
+            let student = students.find(s => s.id.toString() === idNumber && s.lastName === lastName);
+            
+            if (student) {
+                result.innerHTML = `✅ Found: <br> <strong>${student.fullName}</strong> <br> Hall: ${student.hall}`;
+                result.style.color = "green";
+            } else {
+                result.innerHTML = "❌ No match found. Please check your details.";
+                result.style.color = "red";
+            }
+        }
+    </script>
+</body>
+</html>
