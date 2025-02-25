@@ -32,8 +32,8 @@
     </style>
 </head>
 <body>
-    <h2>MTCE ELECTIONS 2025:  Check Your Election Register Details</h2>
-    <input type="text" id="idNumber" placeholder="Enter ID Number"><br>
+    <h2>MTCE ELECTIONS REGISTER 2025:  Check Your Election Details</h2>
+    <input type="text" id="idNumber" placeholder="Enter Index Number"><br>
     <input type="text" id="lastName" placeholder="Enter Last Name"><br>
     <button onclick="checkDetails()">Check Details</button>
     <p id="result"></p>
@@ -45,7 +45,7 @@
         fetch("election_register.json")
             .then(response => response.json())
             .then(data => students = data)
-            .catch(error => console.error("Error loading data:", error));
+            .catch(error => console.error("your data is not loaded:", error));
 
         function checkDetails() {
             let idNumber = document.getElementById("idNumber").value.trim();
@@ -58,7 +58,7 @@
                 result.innerHTML = `✅ Found: <br> <strong>${student.fullName}</strong> <br> Hall: ${student.hall}`;
                 result.style.color = "green";
             } else {
-                result.innerHTML = "❌ No match found. Please check your details.";
+                result.innerHTML = "❌ No details found. Please check your details.";
                 result.style.color = "red";
             }
         }
