@@ -1,62 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-     <head>
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Check Your Election Details</title>
-           <style>
+    <style>
         body { 
-             font-family: Arial, sans-serif; 
-             text-align: center; margin-top: 50px; 
-             background-image:  url('Main-Entrance.jpg');/* Change to your file name */
-             background-size: cover; /* Cover the whole screen */
-             background-position: center; /* Center the image */
-             background-attachment: fixed; /* Keep background fixed while scrolling */
-             } input, 
-         
-         button { 
-              padding: 10px; 
-              color: white; margin: 5px; 
-              width: 250px; 
-               }
-        button { 
-             background-color: blue; 
-              border: none; 
-             cursor: pointer; 
-               }
-        #result { 
-             margin-top: 20px; 
-             font-weight: bold; 
-               }
+            font-family: Arial, sans-serif; 
+            text-align: center; 
+            margin-top: 50px; 
+            background-image: url('Main-Entrance.jpg'); /* Change to your file name */
+            background-size: cover; 
+            background-position: center; 
+            background-attachment: fixed; 
+        }
+        
+        input, button { 
+            padding: 10px; 
+            color: white; 
+            margin: 5px; 
+            width: 250px; 
+        }
 
-                setTimeout(function() {
-    location.reload(); // Reloads the page after 5 seconds
-  }, 5000); // 10000 milliseconds = 10 seconds
+        button { 
+            background-color: blue; 
+            border: none; 
+            cursor: pointer; 
+        }
+
+        #result { 
+            margin-top: 20px; 
+            font-weight: bold; 
+        }
+
+        input::placeholder {
+            color: gray;
+        }
     </style>
 </head>
 <body>
     <h2>MTCE ELECTIONS REGISTER 2025, Check Your Election Details</h2>
-    <input type="text" id="idNumber" placeholder="Enter Index Number" style="color: gray;"><br>
-    <input type="text" id="lastName" placeholder="Enter Last Name" style="color: gray;"><br>
+    <input type="text" id="idNumber" placeholder="Enter Index Number"><br>
+    <input type="text" id="lastName" placeholder="Enter Last Name"><br>
     <button onclick="checkDetails()">Check Details</button>
     <p id="result"></p>
     
     <script>
         let students = [];
-        
+
         // Fetch the JSON file and store the data
         fetch("election_register_25.json")
             .then(response => response.json())
             .then(data => students = data)
-            .catch(error => console.error("your data is not loaded:", error));
+            .catch(error => console.error("Your data is not loaded:", error));
 
         function checkDetails() {
             let idNumber = document.getElementById("idNumber").value.trim();
             let lastName = document.getElementById("lastName").value.trim().toUpperCase();
             let result = document.getElementById("result");
-            
+
             let student = students.find(s => s.id.toString() === idNumber && s.lastName === lastName);
-            
+
             if (student) {
                 result.innerHTML = `✅ Found: <br> <strong>${student.fullName}</strong> <br> Hall: ${student.hall}`;
                 result.style.color = "green";
@@ -64,6 +68,11 @@
                 result.innerHTML = "❌ No details found. Please check your details.";
                 result.style.color = "red";
             }
+
+            // Refresh the page 10 seconds after displaying results
+            setTimeout(function() {
+                location.reload();
+            }, 10000);
         }
     </script>
 </body>
